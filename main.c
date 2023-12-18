@@ -34,33 +34,33 @@ void main(void)
     //Init communication
     init_comm();
     //Init ADC
-    //init_adc();  
+    init_adc();  
     //Init Audio
-    //init_audio();
+    init_audio();
     
     
     //Wait for I2C to stabilize
-    //__delay_ms(200);
+    __delay_ms(200);
     //Init clock
-    //init_clock();
+    init_clock();
     //Init LED Controller
     init_led();
     //Init Bluetooth
-    //init_bt();
+    init_bt();
 
     //Init and start interrupts
-    //init_interrupt();
-    //set_status_led(INIT, TRUE);   
+    init_interrupt();
+    set_status_led(INIT, TRUE);   
     
     __delay_ms(1000);
     
     //Start in clock mode
-    //set_status_led(CLOCKMD, TRUE);
+    set_status_led(CLOCKMD, TRUE);
     
     //Init program switch
-    //prog_sw_process();
+    prog_sw_process();
 
-    //open_short_test(0);
+    open_short_test(0);
     char all_on[192];
     for(unsigned int i = 0; i < 192; i++)
             all_on[i] = 0xFF;
@@ -109,23 +109,23 @@ void main(void)
             //set_status_led(CLOCKMD, FALSE);
             
         }
-       /* //Poll variables for changes
+        //Poll variables for changes
         if(isFFTReady())
             processFFT();
         //Poll time quality
         if(time_needs_to_be_set())
-            set_status_led(TIMSET, FALSE);*/
-        //if(bt_msg_received())
+            set_status_led(TIMSET, FALSE);
+        if(bt_msg_received())
             //bt_process();
-        //if(usb_msg_received())
-            //usb_process();
+        if(usb_msg_received())
+            usb_process();
         
-        /*set_status_led(BADTQ, TRUE);
+        set_status_led(BADTQ, TRUE);
         __delay_ms(1000);
         set_status_led(ERROR, TRUE);
         __delay_ms(1000);
         set_status_led(TIMSET, TRUE);
-        __delay_ms(1000);*/
+        __delay_ms(1000);
     }
 }
 
@@ -155,7 +155,7 @@ void interrupt low_priority low_pri_isr(void)
 /*ISR Function to handle all the low priority interrupts*/
 {
     //Minute interrupt
-    if(/*!time_needs_to_be_set() && */MIN_INT)
+    if(MIN_INT)
         time = get_time();
 
     //LED Update Interrupt
